@@ -1,0 +1,49 @@
+{
+    "name": "kata-js",
+    "author": {
+        "name": "Mathias Schilling",
+        "email": "m@matchilling.com",
+        "url": "https://www.matchilling.com"
+    },
+    "version": "0.1.0",
+    "license": "GPL-3.0",
+    "description": "",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/matchilling/kata-js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/matchilling/kata-js/issues"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.23.0",
+        "babel-core": "^6.24.0",
+        "babel-plugin-istanbul": "^4.1.1",
+        "babel-preset-es2015": "^6.22.0",
+        "chai": "^3.5.0",
+        "esdoc": "^0.5.2",
+        "eslint": "^3.17.0",
+        "eslint-config-matchilling": "^2.1.0",
+        "eslint-plugin-import": "^2.2.0",
+        "mocha": "^3.2.0",
+        "nyc": "^10.2.0"
+    },
+    "scripts": {
+        "compile": "node ./node_modules/babel-cli/bin/babel.js --minified --no-comments --out-dir lib/ src/",
+        "coverage": "node node_modules/nyc/bin/nyc.js --check-coverage npm test",
+        "dev": "node node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive --watch test/",
+        "docs:make": "node node_modules/esdoc/out/src/ESDocCLI.js -c .esdoc.json",
+        "eslint": "node node_modules/eslint/bin/eslint.js src/",
+        "test": "npm run eslint && node node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive test/"
+    },
+    "eslintConfig": {
+        "extends": [
+            "eslint-config-matchilling"
+        ]
+    },
+    "babel": {
+        "presets": [
+            "es2015"
+        ]
+    }
+}

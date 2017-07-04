@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - 'stable'
+  - "7"
+  - "6"
+  - "6.10.2" # LTS Boron
+  - "6.10" # Supported nodeJS version on AWS lambda
+  - "5"
+  - "4.8.2" # LTS Argon
+  - "4.3.2" # Supported nodeJS version on AWS lambda
+
+script: "npm run test"
+
+sudo: false
+
+cache:
+  directories:
+    - node_modules
+
+git:
+  depth: 1

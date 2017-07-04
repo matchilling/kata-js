@@ -1,0 +1,8 @@
+doc/
+src/
+test/
+.esdoc.json
+.editorconfig
+.gitattributes
+.tern-project
+.travis.yml
