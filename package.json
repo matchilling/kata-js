@@ -33,7 +33,7 @@
         "coverage": "node node_modules/nyc/bin/nyc.js --check-coverage npm test",
         "dev": "node node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive --watch test/",
         "docs:make": "node node_modules/esdoc/out/src/ESDocCLI.js -c .esdoc.json",
-        "eslint": "node node_modules/eslint/bin/eslint.js src/",
+        "eslint": "node node_modules/eslint/bin/eslint.js src/ test/",
         "test": "npm run eslint && node node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive test/"
     },
     "eslintConfig": {
