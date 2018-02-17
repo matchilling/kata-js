@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: ./config/Dockerfile
+    command: npm run test -- --watch
+    container_name: kata-js
+    volumes:
+      - .:/opt/kata-js
+      - node_modules:/opt/kata-js/node_modules
+
+volumes:
+  node_modules:
