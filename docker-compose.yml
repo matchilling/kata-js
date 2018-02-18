@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./config/Dockerfile
-    command: npm run test -- --watch
+    command: npm run dev
     container_name: kata-js
     volumes:
       - .:/opt/kata-js
