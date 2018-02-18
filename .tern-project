@@ -1,9 +1,19 @@
 {
-    "ecmaVersion": 6,
-    "libs": [],
-    "loadEagerly": [],
-    "dontLoad": [],
-    "plugins": {
-        "doc_comment": true
+  "ecmaVersion": 6,
+  "libs": [
+    "chai"
+  ],
+  "loadEagerly": [],
+  "dontLoad": [],
+  "plugins": {
+    "doc_comment": true,
+    "complete_strings": {
+      "maxLength": 15
+    },
+    "node": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
     }
+  }
 }
