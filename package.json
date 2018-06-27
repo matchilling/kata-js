@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/matchilling/kata-js/issues"
   },
+  "engines": {
+    "node": ">=6.10"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
