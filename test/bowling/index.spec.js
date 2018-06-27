@@ -33,6 +33,23 @@ describe(`${pkg.name}/BowlingGame`, () => {
     assert.equal(game.score(), 20);
   });
 
+  it('Play a perfect game with score 300', () => {
+    for (let i = 1; i <= 12; i += 1) {
+      game.roll(10);
+    }
+
+    assert.equal(game.score(), 300);
+  });
+
+  it('Throw 9 strikes in a row and a gutter ball with score 270', () => {
+    for (let i = 1; i <= 9; i += 1) {
+      game.roll(10);
+    }
+    game.roll(0);
+
+    assert.equal(game.score(), 240);
+  });
+
   it('Play the example game and score 133', () => {
     game.roll(1);
     game.roll(4);

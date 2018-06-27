@@ -11,6 +11,7 @@ class BowlingGame {
     this.frames = [];
   }
 
+
   /**
    * @private
    * @param  {Array} frame
@@ -48,10 +49,10 @@ class BowlingGame {
       throw new TypeError('Argument pins must be of typ integer.');
     }
 
-    if (0 === this.frames.length) {
-      this.frames.push([pins]);
-    } else if (10 === pins) {
+    if (10 === pins) {
       this.frames.push([pins, 0]);
+    } else if (0 === this.frames.length) {
+      this.frames.push([pins]);
     } else if (2 <= this.frames[this.frames.length - 1].length) {
       this.frames.push([pins]);
     } else {
@@ -64,13 +65,21 @@ class BowlingGame {
    */
   score() {
     return this.frames.reduce((acc, frame, index, frames) => {
-      const nextFrame = undefined !== frames[index + 1] ?
-        frames[index + 1] : [];
+      const nextFrame = undefined !== frames[index + 1]
+              ? frames[index + 1]
+              : [],
+            followingFrame = undefined !== frames[index + 2]
+              ? frames[index + 2]
+              : [];
 
       let score = BowlingGame.frameScore(frame);
 
       if (BowlingGame.isStrike(frame)) {
         score += nextFrame[0];
+
+        if (BowlingGame.isStrike(followingFrame)) {
+          score += followingFrame[0];
+        }
       }
 
       if (BowlingGame.isSpare(frame)) {
