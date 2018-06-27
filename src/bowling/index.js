@@ -75,23 +75,26 @@ class BowlingGame {
       let score = BowlingGame.frameScore(frame);
 
       if (BowlingGame.isStrike(frame)) {
-        score += nextFrame[0];
-
-        if (BowlingGame.isStrike(followingFrame)) {
-          score += followingFrame[0];
-        }
+        score += BowlingGame.isStrike(followingFrame)
+          ? nextFrame[0] + followingFrame[0]
+          : nextFrame[0];
       }
 
       if (BowlingGame.isSpare(frame)) {
         score += BowlingGame.frameScore(nextFrame);
       }
 
-      if (maxFrames >= index + 1) {
-        return acc + score;
-      }
-
-      return acc;
+      return maxFrames < index + 1
+        ? acc
+        : acc + score;
     }, 0);
+  }
+
+  /**
+   * @return {undefined}
+   */
+  reset() {
+    this.frames = [];
   }
 }
 
