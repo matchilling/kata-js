@@ -16,7 +16,7 @@ describe(`${pkg.name}/BowlingGame`, () => {
   });
 
   it('Play a gutter game with score 0', () => {
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 1; 10 >= i; i += 1) {
       game.roll(0);
       game.roll(0);
     }
@@ -25,7 +25,7 @@ describe(`${pkg.name}/BowlingGame`, () => {
   });
 
   it('Play a simple game and score 20', () => {
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 1; 10 >= i; i += 1) {
       game.roll(1);
       game.roll(1);
     }
@@ -34,7 +34,7 @@ describe(`${pkg.name}/BowlingGame`, () => {
   });
 
   it('Play a perfect game with score 300', () => {
-    for (let i = 1; i <= 12; i += 1) {
+    for (let i = 1; 12 >= i; i += 1) {
       game.roll(10);
     }
 
@@ -42,7 +42,7 @@ describe(`${pkg.name}/BowlingGame`, () => {
   });
 
   it('Throw 9 strikes in a row and a gutter ball with score 270', () => {
-    for (let i = 1; i <= 9; i += 1) {
+    for (let i = 1; 9 >= i; i += 1) {
       game.roll(10);
     }
     game.roll(0);
@@ -88,8 +88,8 @@ describe(`${pkg.name}/BowlingGame`, () => {
     it('Should throw a type error if argument pins is not of type integer.', () => {
       assert.throws(
         () => {
-        game.roll('not_an_integer')
-      }, TypeError, 'Argument pins must be of typ integer.');
+          game.roll('not_an_integer');
+        }, TypeError, 'Argument pins must be of typ integer.');
     });
   });
 });

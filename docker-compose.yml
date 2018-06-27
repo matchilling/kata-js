@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: ./config/Dockerfile
     command: npm run dev
+    tty: true
     container_name: kata-js
     volumes:
       - .:/opt/kata-js

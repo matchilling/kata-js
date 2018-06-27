@@ -7,7 +7,7 @@ const captureStream = (stream) => {
         writer = stream.write;
 
   Object.assign(stream, {
-    write : function(chunk) {
+    write(chunk) {
       buffer.push(chunk.toString());
       writer.apply(stream, arguments);
     }
@@ -16,7 +16,9 @@ const captureStream = (stream) => {
   return {
     captured : () => buffer.join(''),
     unhook   : () => {
-      Object.assign(stream, { write : writer });
+      Object.assign(stream, {
+        write : writer
+      });
     }
   };
 };
