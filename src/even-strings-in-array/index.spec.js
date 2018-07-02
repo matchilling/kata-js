@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import evenStrings from './../../src/even_strings_in_array';
+import evenStrings from './';
 import pkg from '../../package.json';
 
 describe(`${pkg.name}/even_strings_in_array`, () => {

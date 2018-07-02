@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import calc from './../../src/reverse_polish_notation_calculator';
+import calc from './';
 import pkg from '../../package.json';
 
 describe(`${pkg.name}/reverse_polish_notation_calculator`, () => {
