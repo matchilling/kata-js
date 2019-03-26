@@ -18,12 +18,15 @@ const COMMAND = {
       };
 
 class MarsRover {
-  constructor(x, y, direction) {
+  constructor(x, y, direction, obstacles) {
     if (!Number.isInteger(x) || !Number.isInteger(y)) {
       throw new TypeError('Coordinates must be of type integer.');
     }
     if (!DIRECTION.isValid(direction)) {
       throw new Error(`Invalid direction "${direction} given."`);
+    }
+    if (obstacles !== undefined && !Array.isArray(obstacles)) {
+      throw new TypeError('Obstacles must be of type array.');
     }
 
     this.coordinate = {
@@ -31,6 +34,7 @@ class MarsRover {
       y
     };
     this.direction = direction;
+    this.obstacles = obstacles;
   }
 
   move(instructions) {
@@ -38,7 +42,15 @@ class MarsRover {
       throw new TypeError('Instructions must be of type string.');
     }
 
-    const parsedInstructions = instructions.split('').reverse();
+    const isBlocked = (x, y) => {
+            if (!Array.isArray(this.obstacles)) {
+              return false;
+            }
+
+            return 0 < this.obstacles.filter(cor => cor[0] === x && cor[1] === y).length;
+          },
+
+          parsedInstructions = instructions.split('');
     for (let i = 0; i < parsedInstructions.length; i += 1) {
       const command = parsedInstructions[i];
 
@@ -49,15 +61,27 @@ class MarsRover {
       if (command === COMMAND.BACKWARDS) {
         switch (this.direction) {
         case DIRECTION.EAST:
+          if (isBlocked(this.coordinate.x - 1, this.coordinate.y)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.x -= 1;
           break;
         case DIRECTION.NORTH:
+          if (isBlocked(this.coordinate.x, this.coordinate.y - 1)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.y -= 1;
           break;
         case DIRECTION.SOUTH:
+          if (isBlocked(this.coordinate.x, this.coordinate.y + 1)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.y += 1;
           break;
         case DIRECTION.WEST:
+          if (isBlocked(this.coordinate.x + 1, this.coordinate.y)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.x += 1;
           break;
         default:
@@ -67,15 +91,27 @@ class MarsRover {
       if (command === COMMAND.FORWARD) {
         switch (this.direction) {
         case DIRECTION.EAST:
+          if (isBlocked(this.coordinate.x + 1, this.coordinate.y)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.x += 1;
           break;
         case DIRECTION.NORTH:
+          if (isBlocked(this.coordinate.x, this.coordinate.y + 1)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.y += 1;
           break;
         case DIRECTION.SOUTH:
+          if (isBlocked(this.coordinate.x, this.coordinate.y - 1)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.y -= 1;
           break;
         case DIRECTION.WEST:
+          if (isBlocked(this.coordinate.x - 1, this.coordinate.y)) {
+            return `(${this.coordinate.x}, ${this.coordinate.y}) ${this.direction} STOPPED`;
+          }
           this.coordinate.x -= 1;
           break;
         default:
