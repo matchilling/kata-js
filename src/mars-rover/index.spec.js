@@ -3,19 +3,24 @@ import MarsRover from './index';
 import pkg from '../../package.json';
 
 describe(`${pkg.name}/mars-rover`, () => {
-  it('initialises with starting point (x, y) and a given direction (NORTH, SOUTH, EAST, WEST)', () => {
-    const rover = new MarsRover(4, 2, 'EAST');
+  describe('#constructor', () => {
+    it('initialises with starting point (x, y) and a given direction (NORTH, SOUTH, EAST, WEST)', () => {
+      const rover = new MarsRover(4, 2, 'EAST');
 
-    assert.instanceOf(rover, MarsRover);
-    assert.equal(rover.coordinate.x, 4);
-    assert.equal(rover.coordinate.y, 2);
-    assert.equal(rover.direction, 'EAST');
-  });
-  it('throws an error if coordinates are not integers', () => {
-    assert.throws(() => new MarsRover(-1.5, 0.1, 'EAST'), TypeError);
-  });
-  it('throws an error if direction is not supported', () => {
-    assert.throws(() => new MarsRover(0, 0, 'DOES_NOT_EXIST'), Error);
+      assert.instanceOf(rover, MarsRover);
+      assert.equal(rover.coordinate.x, 4);
+      assert.equal(rover.coordinate.y, 2);
+      assert.equal(rover.direction, 'EAST');
+    });
+    it('throws an error if coordinates are not integers', () => {
+      assert.throws(() => new MarsRover(-1.5, 0.1, 'EAST'), TypeError);
+    });
+    it('throws an error if direction is not supported', () => {
+      assert.throws(() => new MarsRover(0, 0, 'DOES_NOT_EXIST'), Error);
+    });
+    it('throws an error if set of obstacles coordinates is not of type Array', () => {
+      assert.throws(() => new MarsRover(0, 0, 'EAST', 'not-an-array'), Error);
+    });
   });
 
   describe('#move', () => {
@@ -34,22 +39,46 @@ describe(`${pkg.name}/mars-rover`, () => {
       assert.equal(rover.move('FLFFFRFLB'), '(6, 4) NORTH');
     });
 
+    it('does not move if block by obstacle', () => {
+      const rover = new MarsRover(4, 2, 'EAST', [[5, 2], [3, 5], [7, 4]]);
+      assert.equal(rover.move('FLFFFRFLB'), '(4, 2) EAST STOPPED');
+    });
+
     describe('backwards', () => {
       it('moves backwards, heading EAST', () => {
         const rover = new MarsRover(0, 0, 'EAST');
         assert.equal(rover.move('B'), '(-1, 0) EAST');
       });
+      it('does not move if block by obstacle, heading EAST', () => {
+        const rover = new MarsRover(0, 0, 'EAST', [[-1, 0]]);
+        assert.equal(rover.move('B'), '(0, 0) EAST STOPPED');
+      });
+
       it('moves backwards, heading NORTH', () => {
         const rover = new MarsRover(0, 0, 'NORTH');
         assert.equal(rover.move('B'), '(0, -1) NORTH');
       });
+      it('does not move if block by obstacle, heading NORTH', () => {
+        const rover = new MarsRover(0, 0, 'NORTH', [[0, -1]]);
+        assert.equal(rover.move('B'), '(0, 0) NORTH STOPPED');
+      });
+
       it('moves backwards, heading SOUTH', () => {
         const rover = new MarsRover(0, 0, 'SOUTH');
         assert.equal(rover.move('B'), '(0, 1) SOUTH');
       });
+      it('does not move if block by obstacle, heading SOUTH', () => {
+        const rover = new MarsRover(0, 0, 'SOUTH', [[0, 1]]);
+        assert.equal(rover.move('B'), '(0, 0) SOUTH STOPPED');
+      });
+
       it('moves backwards, heading WEST', () => {
         const rover = new MarsRover(0, 0, 'WEST');
         assert.equal(rover.move('B'), '(1, 0) WEST');
+      });
+      it('does not move if block by obstacle, heading WEST', () => {
+        const rover = new MarsRover(0, 0, 'WEST', [[1, 0]]);
+        assert.equal(rover.move('B'), '(0, 0) WEST STOPPED');
       });
     });
 
@@ -58,17 +87,36 @@ describe(`${pkg.name}/mars-rover`, () => {
         const rover = new MarsRover(0, 0, 'EAST');
         assert.equal(rover.move('F'), '(1, 0) EAST');
       });
+      it('does not move if block by obstacle, heading EAST', () => {
+        const rover = new MarsRover(0, 0, 'EAST', [[1, 0]]);
+        assert.equal(rover.move('F'), '(0, 0) EAST STOPPED');
+      });
+
       it('moves forward, heading NORTH', () => {
         const rover = new MarsRover(0, 0, 'NORTH');
         assert.equal(rover.move('F'), '(0, 1) NORTH');
       });
+      it('does not move if block by obstacle, heading NORTH', () => {
+        const rover = new MarsRover(0, 0, 'NORTH', [[0, 1]]);
+        assert.equal(rover.move('F'), '(0, 0) NORTH STOPPED');
+      });
+
       it('moves forward, heading SOUTH', () => {
         const rover = new MarsRover(0, 0, 'SOUTH');
         assert.equal(rover.move('F'), '(0, -1) SOUTH');
       });
+      it('does not move if block by obstacle, heading SOUTH', () => {
+        const rover = new MarsRover(0, 0, 'SOUTH', [[0, -1]]);
+        assert.equal(rover.move('F'), '(0, 0) SOUTH STOPPED');
+      });
+
       it('moves forward, heading WEST', () => {
         const rover = new MarsRover(0, 0, 'WEST');
         assert.equal(rover.move('F'), '(-1, 0) WEST');
+      });
+      it('does not move if block by obstacle, heading SOUTH', () => {
+        const rover = new MarsRover(0, 0, 'WEST', [[-1, 0]]);
+        assert.equal(rover.move('F'), '(0, 0) WEST STOPPED');
       });
     });
 
